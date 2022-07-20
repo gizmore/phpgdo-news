@@ -67,7 +67,7 @@ final class GDO_News extends GDO implements RSSItem
 	/**
 	 * @return GDO_Category
 	 */
-	public function getCategory() { return $this->getValue('news_category'); }
+	public function getCategory() { return $this->gdoValue('news_category'); }
 	public function getCategoryID() { return $this->gdoVar('news_category'); }
 	public function isVisible() { return $this->gdoVar('news_visible') === '1'; }
 	public function getSendDate() { return $this->gdoVar('news_send'); }
@@ -78,7 +78,7 @@ final class GDO_News extends GDO implements RSSItem
 	/**
 	 * @return GDO_User
 	 */
-	public function getCreator() { return $this->getValue('news_creator'); }
+	public function getCreator() { return $this->gdoValue('news_creator'); }
 	public function getCreatorID() { return $this->gdoVar('news_creator'); }
 	
 	### Perm ###
@@ -97,10 +97,10 @@ final class GDO_News extends GDO implements RSSItem
 	public function getMessageISO($iso) { return $this->getTextVarISO('newstext_message_output', $iso); }
 	
 	public function getTextVar($key) { return $this->getText(Trans::$ISO)->gdoVar($key); }
-	public function getTextValue($key) { return $this->getText(Trans::$ISO)->getValue($key); }
+	public function getTextValue($key) { return $this->getText(Trans::$ISO)->gdoValue($key); }
 	
 	public function getTextVarISO($key, $iso) { return $this->getText($iso)->gdoVar($key); }
-	public function getTextValueISO($key, $iso) { return $this->getText($iso)->getValue($key); }
+	public function getTextValueISO($key, $iso) { return $this->getText($iso)->gdoValue($key); }
 	
 	public function displayMessage()
 	{

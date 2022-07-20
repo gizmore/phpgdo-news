@@ -10,6 +10,6 @@ final class Comments extends Comments_List
 	public function gdoCommentsTable() { return GDO_NewsComments::table(); }
 	public function hrefAdd() { return href('News', 'Comments', 'id='.$this->object->getID()); }
 	
-	public function isGuestAllowed() { return Module_News::instance()->cfgGuestNews(); }
+	public function isGuestAllowed() : bool { return Module_News::instance()->cfgGuestNews(); }
 	
 }

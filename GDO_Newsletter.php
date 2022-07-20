@@ -44,10 +44,10 @@ final class GDO_Newsletter extends GDO
 	/**
 	 * @return GDO_User
 	 */
-	public function getUser() { return $this->getValue('newsletter_user'); }
+	public function getUser() { return $this->gdoValue('newsletter_user'); }
 	public function getUserID() { return $this->gdoVar('newsletter_user'); }
 	public function hasUser() { return $this->getUserID() !== null; }
 	public function getLangISO() { return $this->gdoVar('newsletter_lang'); }
-	public function getMail() { return $this->getValue('newsletter_email'); }
+	public function getMail() { return $this->gdoValue('newsletter_email'); }
 	
 }

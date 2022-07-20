@@ -13,7 +13,7 @@ class NewsList extends MethodQueryCards
 	
 	public function useFetchInto() { return false; }
 	
-	public function isGuestAllowed() { return Module_News::instance()->cfgGuestNews(); }
+	public function isGuestAllowed() : bool { return Module_News::instance()->cfgGuestNews(); }
 	
 	public function gdoHeaders() : array
 	{

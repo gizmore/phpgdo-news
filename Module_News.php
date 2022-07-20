@@ -82,13 +82,13 @@ final class Module_News extends GDO_Module
 	{
 	    if ($this->cfgLeftBar())
 	    {
-    	    GDT_Page::$INSTANCE->leftNav->addField(
+    	    GDT_Page::instance()->leftBar()->addField(
     	        GDT_Link::make('link_news')->href(href('News', 'NewsList')));
 	    }
 	    if ($this->cfgBlogbar())
 	    {
-	        GDT_Page::$INSTANCE->leftNav->addField(
-	            GDT_Template::make()->template('News', 'blogbar.php', ['bar'=>GDT_Page::$INSTANCE->leftNav]));
+	        GDT_Page::instance()->leftBar()->addField(
+	            GDT_Template::make()->template('News', 'blogbar.php', ['bar'=>GDT_Page::instance()->leftBar()]));
 	    }
 	}
 
