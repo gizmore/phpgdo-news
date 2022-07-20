@@ -21,7 +21,7 @@ final class Admin extends MethodQueryTable
 	
 	public function getPermission() : ?string { return 'staff'; }
 	
-	public function getDefaultOrder() { return 'news_created DESC'; }
+	public function getDefaultOrder() : ?string { return 'news_created DESC'; }
 	
 	public function gdoHeaders() : array
 	{
