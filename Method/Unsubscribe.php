@@ -12,7 +12,7 @@ use GDO\News\GDO_Newsletter;
  */
 final class Unsubscribe extends Method
 {
-	public function isAlwaysTransactional() { return true; }
+	public function isAlwaysTransactional() : bool { return true; }
 	
 	public function execute()
 	{

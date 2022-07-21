@@ -27,7 +27,7 @@ final class GDO_Newsletter extends GDO
 		);
 	}
 	
-	public function gdoHashcode()
+	public function gdoHashcode() : string
 	{
 		return self::gdoHashcodeS($this->getVars(['newsletter_id', 'newsletter_user', 'newsletter_email']));
 	}
