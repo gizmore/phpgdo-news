@@ -1,7 +1,7 @@
 <?php
 namespace GDO\News\Method;
 
-use GDO\Comment\Comments_List;
+use GDO\Comments\Comments_List;
 use GDO\News\Module_News;
 use GDO\News\GDO_NewsComments;
 

@@ -1,7 +1,7 @@
 <?php
 namespace GDO\News;
 
-use GDO\Comment\GDO_CommentTable;
+use GDO\Comments\GDO_CommentTable;
 
 final class GDO_NewsComments extends GDO_CommentTable
 {

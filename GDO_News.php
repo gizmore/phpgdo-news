@@ -3,7 +3,7 @@ namespace GDO\News;
 
 use GDO\Category\GDO_Category;
 use GDO\Category\GDT_Category;
-use GDO\Comment\CommentedObject;
+use GDO\Comments\CommentedObject;
 use GDO\Core\GDO;
 use GDO\Core\GDT_AutoInc;
 use GDO\Core\GDT_CreatedAt;
