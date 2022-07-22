@@ -61,10 +61,10 @@ final class Write extends MethodForm
 		$form->textRaw(GDT_NewsStatus::make('status')->gdo($news)->renderCell());
 		
 		# Category select
-		$form->addFields(array(
+		$form->addFields(
 			$news->gdoColumn('news_category'),
 			GDT_Divider::make('div_texts'),
-		));
+		);
 		
 		# Translation tabs
 		$tabs = GDT_Tabs::make('tabs');
@@ -174,7 +174,7 @@ final class Write extends MethodForm
 		}
 		
 		$hrefEdit = href('News', 'Write', '&id='.$news->getID());
-		Website::redirectMessage('msg_news_created', null, $hrefEdit);
+		$this->redirectMessage('msg_news_created', null, $hrefEdit);
 		return $this->renderPage();
 	}
 	
