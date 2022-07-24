@@ -21,7 +21,7 @@ final class Module_News extends GDO_Module
 	##############
 	### Module ###
 	##############
-	public function href_administrate_module() { return href('News', 'Admin'); }
+	public function href_administrate_module() : ?string { return href('News', 'Admin'); }
 	public function onLoadLanguage() : void { $this->loadLanguage('lang/news'); }
 	public function getDependencies() : array { return ['Comments', 'Category', 'Mail']; }
 	public function getClasses() : array
@@ -58,7 +58,7 @@ final class Module_News extends GDO_Module
 	############
 	### Init ###
 	############
-	public function onInit() : void
+	public function onInit()
 	{
 		Website::addLink($this->href('RSSFeed'), 'application/rss+xml', 'alternate', t('rss_newsfeed', [sitename()]));
 	}

@@ -3,7 +3,7 @@ namespace GDO\News\Test;
 
 use GDO\Tests\TestCase;
 use GDO\News\Method\Write;
-use GDO\Tests\MethodTest;
+use GDO\Tests\GDT_MethodTest;
 use function PHPUnit\Framework\assertEquals;
 use GDO\News\GDO_News;
 use function PHPUnit\Framework\assertStringContainsString;

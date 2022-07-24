@@ -21,7 +21,7 @@ return array(
 ##################################################
 'list_news_comments' => 'Commenti',
 ##################################################
-'ft_news_write' => 'Componi messaggio',
+'mt_news_write' => 'Componi messaggio',
 'div_texts' => 'Testo del messaggio',
 'msg_news_created' => 'Questo messaggio é stato composto ma non é ancora visibile.',
 'msg_news_edited' => 'Questo messaggo é stato modificato.',
@@ -30,11 +30,11 @@ return array(
 'newsletter_status_waiting' => 'Questo messaggio non é stato inviato via MAil.',
 'newsletter_status_in_queue' => 'Il messaggio si trova nel Mailqueue.',
 ##################################################
-'ft_news_writecomment' => 'Crea Commento',
+'mt_news_writecomment' => 'Crea Commento',
 ##################################################
 'list_news_admin' => 'News (Admin)',
 ##################################################
-'ft_news_newsletterabbo' => 'Abbona Newsletter',
+'mt_news_newsletterabbo' => 'Abbona Newsletter',
 'newsletter_subscribed' => 'Voglio abbonare la Newsletter.',
 'newsletter_sub_guest_unknown' => 'Per ospiti non é possibile indagare lo stato del Newsletter.',
 'newsletter_info_subscribed' => 'Avete abbonato la Newsletter. Le impostazioni Mail possono essere effetuate qui: %s', 
@@ -76,6 +76,6 @@ Il vostro %2$s Team.',
 'news_sending' => 'In coda?',
 'news_sent' => 'Notizie inviate',
 'rss_newsfeed' => '%s Newsfeed',
-'mtitle_news_rssfeed' => 'Newsfeed',
-'mtitle_news_unsubscribe' => 'Annulla l\'iscrizione ai messaggi',
+'mt_news_rssfeed' => 'Newsfeed',
+'mt_news_unsubscribe' => 'Annulla l\'iscrizione ai messaggi',
 );

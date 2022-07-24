@@ -1,8 +1,11 @@
 <?php
 namespace GDO\News;
+
 use GDO\UI\WithIcon;
 use GDO\Core\GDT_Template;
 use GDO\UI\GDT_Label;
+
+
 final class GDT_NewsStatus extends GDT_Label
 {
 	use WithIcon;

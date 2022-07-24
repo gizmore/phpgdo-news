@@ -13,7 +13,7 @@ use GDO\Language\Trans;
 use GDO\Core\GDT_Template;
 use GDO\Core\GDT_Checkbox;
 use GDO\User\GDO_User;
-use GDO\DB\GDT_Join;
+use GDO\Core\GDT_Join;
 use GDO\Language\GDO_Language;
 use GDO\Date\Time;
 

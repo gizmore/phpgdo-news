@@ -2,6 +2,7 @@
 namespace GDO\News\Method;
 
 use GDO\Admin\MethodAdmin;
+use GDO\Core\GDO;
 use GDO\News\Module_News;
 use GDO\News\GDO_News;
 use GDO\Table\MethodQueryTable;
@@ -17,7 +18,7 @@ final class Admin extends MethodQueryTable
 {
 	use MethodAdmin;
 	
-	public function gdoTable() { return GDO_News::table(); }
+	public function gdoTable() : GDO { return GDO_News::table(); }
 	
 	public function getPermission() : ?string { return 'staff'; }
 	

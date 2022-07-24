@@ -2,6 +2,7 @@
 namespace GDO\News\Method;
 
 use GDO\Admin\MethodAdmin;
+use GDO\Core\GDO;
 use GDO\Table\MethodQueryTable;
 use GDO\News\Module_News;
 use GDO\News\GDO_Newsletter;
@@ -20,7 +21,7 @@ final class Newsletters extends MethodQueryTable
 	
 	public function getPermission() : ?string { return 'staff'; }
 	
-	public function gdoTable() { return GDO_Newsletter::table(); }
+	public function gdoTable() : GDO { return GDO_Newsletter::table(); }
 	
 	public function beforeExecute() : void
 	{

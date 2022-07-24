@@ -2,7 +2,6 @@
 namespace GDO\News\Method;
 
 use GDO\Admin\MethodAdmin;
-use GDO\Core\Website;
 use GDO\Date\Time;
 use GDO\Form\GDT_AntiCSRF;
 use GDO\Form\GDT_Form;
@@ -13,13 +12,13 @@ use GDO\News\GDT_NewsStatus;
 use GDO\News\Module_News;
 use GDO\News\GDO_News;
 use GDO\News\GDO_NewsText;
+use GDO\UI\GDT_Card;
 use GDO\UI\GDT_Message;
 use GDO\UI\GDT_Divider;
 use GDO\UI\GDT_Tab;
 use GDO\UI\GDT_Tabs;
 use GDO\Util\Common;
 use GDO\UI\GDT_Title;
-use GDO\Core\GDT_ResponseCard;
 
 /**
  * Write a news entry.
@@ -40,7 +39,7 @@ final class Write extends MethodForm
 	 */
 	private $news;
 	
-	public function onInit() : void
+	public function onInit()
 	{
 		if ($id = Common::getRequestString('id'))
 		{
@@ -204,7 +203,7 @@ final class Write extends MethodForm
 	    $this->updateNews($form);
 	    
 	    # Show card and form
-	    return GDT_ResponseCard::make()->gdo($this->news)->
+	    return GDT_Card::make()->gdo($this->news)->
     	    addField(GDT_Divider::make())->
     	    addField($this->renderPage());
 	}
