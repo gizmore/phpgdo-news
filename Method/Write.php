@@ -70,7 +70,7 @@ final class Write extends MethodForm
 		foreach (Module_Language::instance()->cfgSupported() as $iso => $language)
 		{
 			# New tab
-			$tab = GDT_Tab::make('tab_'.$iso)->labelRaw($language->displayName());
+			$tab = GDT_Tab::make('tab_'.$iso)->labelRaw($language->renderName());
 
 			# 2 Fields
 			$primary = $iso === GDO_LANGUAGE;
@@ -123,10 +123,10 @@ final class Write extends MethodForm
 	 * @param string $iso
 	 * @return GDT_Message
 	 */
-	private function makeMessageField($iso)
+	private function makeMessageField(string $iso) : GDT_Message
 	{
 	    $primary = $iso === GDO_LANGUAGE;
-	    return GDT_Message::make()->name("iso][$iso][newstext_message")->label('message')->notNull($primary);
+	    return GDT_Message::make("newstext_message[{$iso}]")->label('message')->notNull($primary);
 	}
 	
 	private function updateNews(GDT_Form $form)

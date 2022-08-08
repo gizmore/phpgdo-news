@@ -6,13 +6,20 @@ use GDO\News\Module_News;
 use GDO\News\GDO_News;
 use GDO\Table\MethodQueryCards;
 
+/**
+ * Render a list of news cards.
+ *  
+ * @author gizmore
+ * @version 7.0.1
+ * @since 6.5.0
+ */
 class NewsList extends MethodQueryCards
 {
-    public function getTitleLangKey() { return 'link_news'; }
-    
+	public function getMethodTitle() : string { return t('link_news'); }
+	
 	public function gdoTable() : GDO { return GDO_News::table(); }
 	
-	public function useFetchInto() : bool { return false; }
+// 	public function useFetchInto() : bool { return false; }
 	
 	public function isGuestAllowed() : bool { return Module_News::instance()->cfgGuestNews(); }
 	

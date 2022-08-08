@@ -10,8 +10,9 @@ use GDO\Core\Website;
 
 /**
  * News module.
+ * 
  * @author gizmore
- * @version 6.11.0
+ * @version 7.0.1
  * @since 6.3.0
  */
 final class Module_News extends GDO_Module
@@ -45,7 +46,7 @@ final class Module_News extends GDO_Module
 			GDT_Checkbox::make('news_guests')->initial('1'),
 			GDT_Checkbox::make('newsletter_guests')->initial('1'),
 		    GDT_Checkbox::make('news_guest_comments')->initial('1'),
-		    GDT_Checkbox::make('news_left_bar')->initial('1'),
+		    GDT_Checkbox::make('hook_sidebar')->initial('1'),
 		];
 	}
 	public function cfgBlogbar() { return $this->getConfigValue('news_blogbar'); }
@@ -53,7 +54,7 @@ final class Module_News extends GDO_Module
 	public function cfgGuestNews() { return $this->getConfigValue('news_guests'); }
 	public function cfgGuestNewsletter() { return $this->getConfigValue('newsletter_guests'); }
 	public function cfgGuestComments() { return $this->getConfigValue('news_guest_comments'); }
-	public function cfgLeftBar() { return $this->getConfigValue('news_left_bar'); }
+	public function cfgLeftBar() { return $this->getConfigValue('hook_sidebar'); }
 	
 	############
 	### Init ###
@@ -68,13 +69,13 @@ final class Module_News extends GDO_Module
 	############
 	public function renderTabs()
 	{
-	    GDT_Page::$INSTANCE->topBar()->addField(
+	    GDT_Page::instance()->topResponse()->addField(
 	        $this->templatePHP('tabs.php'));
 	}
 	
 	public function renderAdminTabs()
 	{
-        GDT_Page::$INSTANCE->topBar()->addField(
+        GDT_Page::instance()->topResponse()->addField(
             GDT_Template::make()->template('News', 'admin_tabs.php'));
 	}
 	

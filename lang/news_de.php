@@ -1,4 +1,5 @@
 <?php
+namespace GDO\News\lang;
 return array(
 ##################################################
 'link_write_news' => 'Nachricht verfassen',

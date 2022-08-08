@@ -14,12 +14,16 @@ use GDO\News\GDT_NewsletterStatus;
 use GDO\News\Module_News;
 use GDO\News\GDO_Newsletter;
 use GDO\User\GDO_User;
+
 /**
  * Susbscribe to the newsletter.
+ * 
  * @author gizmore
  * @see News
  * @see Newsletter
  * @see News_Send
+ * @version 7.0.1
+ * @since 6.3.0
  */
 final class NewsletterAbbo extends MethodForm
 {
@@ -54,6 +58,7 @@ final class NewsletterAbbo extends MethodForm
 		);
 		$form->actions()->addField(GDT_Submit::make());
 	}
+	
 	public function formValidated(GDT_Form $form)
 	{
 		return $this->formAction($form)->addField($this->renderPage());
@@ -99,4 +104,5 @@ final class NewsletterAbbo extends MethodForm
 			return $this->message('msg_newsletter_unsubscribed');
 		}
 	}
+
 }

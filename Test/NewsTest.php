@@ -1,18 +1,19 @@
 <?php
 namespace GDO\News\Test;
 
+use GDO\Tests\GDT_MethodTest;
 use GDO\Tests\TestCase;
 use GDO\News\Method\Write;
-use GDO\Tests\GDT_MethodTest;
-use function PHPUnit\Framework\assertEquals;
 use GDO\News\GDO_News;
 use function PHPUnit\Framework\assertStringContainsString;
+use function PHPUnit\Framework\assertEquals;
 
 /**
  * Tests for the news module.
+ * 
  * @author gizmore
- * @version 6.10
- * @since 6.10
+ * @version 7.0.1
+ * @since 6.10.0
  */
 final class NewsTest extends TestCase
 {
@@ -31,13 +32,13 @@ final class NewsTest extends TestCase
                 ],
             ],
         ];
-        $response = MethodTest::make()->method($method)->parameters($parameters)->execute();
+        $response = GDT_MethodTest::make()->method($method)->parameters($parameters)->execute();
         $this->assert200("Check if a News::Write entry can be created.");
         assertEquals(1, GDO_News::table()->countWhere(), 'check if news were created.');
         
-        $getParameters = ['id' => '1'];
+        $parameters['id'] = '1';
         $parameters['iso']['de']['newstext_message'] = '<div>Ich freue mich zu verkünden<br/><br/>Eine umfangreiche GDO6-Demo hat das Licht der Welt entdeckt.<br/><br/>Viel Spaß beim hacken!</div>';
-        $response = MethodTest::make()->method($method)->getParameters($getParameters)->parameters($parameters)->execute();
+        $response = GDT_MethodTest::make()->method($method)->parameters($parameters)->execute();
         $html = $response->render();
         assertStringContainsString('freue mich zu verk', $html, 'Check if news message got changed.');
         assertEquals(1, GDO_News::table()->countWhere(), 'check if newscount still 1');

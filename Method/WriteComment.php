@@ -2,15 +2,16 @@
 namespace GDO\News\Method;
 
 use GDO\Comments\Comments_Write;
+use GDO\Comments\GDO_CommentTable;
 use GDO\News\Module_News;
 use GDO\News\GDO_NewsComments;
 use GDO\User\GDO_User;
 
 final class WriteComment extends Comments_Write
 {
-	public function gdoCommentsTable() { return GDO_NewsComments::table(); }
+	public function gdoCommentsTable() : GDO_CommentTable { return GDO_NewsComments::table(); }
 	
-	public function hrefList() { return href('News', 'Comments', '&id='.$this->object->getID()); }
+	public function hrefList() : string { return href('News', 'Comments', '&id='.$this->object->getID()); }
 	
 	public function isGuestAllowed() : bool { return Module_News::instance()->cfgGuestComments(); }
 	

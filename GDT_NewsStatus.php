@@ -4,10 +4,15 @@ namespace GDO\News;
 use GDO\UI\WithIcon;
 use GDO\Core\GDT_Template;
 use GDO\UI\GDT_Label;
+use GDO\Core\WithGDO;
 
-
+/**
+ * Render a news status.
+ * @version 7.0.1
+ */
 final class GDT_NewsStatus extends GDT_Label
 {
+	use WithGDO;
 	use WithIcon;
 	
 	public function renderCell() : string
@@ -15,11 +20,9 @@ final class GDT_NewsStatus extends GDT_Label
 		return GDT_Template::php('News', 'cell/news_status.php', ['field'=>$this]);
 	}
 	
-	/**
-	 * @return GDO_News
-	 */
-	public function getNews()
+	public function getNews() : GDO_News
 	{
 		return $this->gdo;
 	}
+
 }
