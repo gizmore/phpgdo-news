@@ -2,6 +2,7 @@
 namespace GDO\News\Method;
 
 use GDO\Core\GDO;
+use GDO\DB\Query;
 use GDO\News\Module_News;
 use GDO\News\GDO_News;
 use GDO\Table\MethodQueryCards;
@@ -31,7 +32,7 @@ class NewsList extends MethodQueryCards
 	
 	public function getDefaultOrder() : ?string { return 'news_created DESC'; }
 	
-	public function getQuery()
+	public function getQuery() : Query
 	{
 		return parent::getQuery()->where('news_visible')->joinObject('newstext');
 	}

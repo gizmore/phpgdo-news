@@ -3,6 +3,7 @@ namespace GDO\News\Method;
 
 use GDO\Admin\MethodAdmin;
 use GDO\Core\GDO;
+use GDO\DB\Query;
 use GDO\News\Module_News;
 use GDO\News\GDO_News;
 use GDO\Table\MethodQueryTable;
@@ -40,7 +41,7 @@ final class Admin extends MethodQueryTable
 		]; 
 	}
 	
-	public function getQuery()
+	public function getQuery() : Query
 	{
 	    $query = parent::getQuery()->select('nt.*');
 	    $query->joinObject('newstext');
