@@ -31,7 +31,7 @@ final class GDO_NewsText extends GDO
 	##############
 	public function getTitle() { return $this->gdoVar('newstext_title'); }
 	public function getMessage() { return $this->gdoVar('newstext_message_input'); }
-	public function displayMessage() { $this->getMessageColumn()->renderCell(); }
+	public function displayMessage() { $this->getMessageColumn()->renderHTML(); }
 	
 	/**
 	 * @return GDT_Message

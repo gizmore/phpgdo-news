@@ -12,7 +12,7 @@ final class GDT_NewsletterStatus extends GDT_Paragraph
 	use WithGDO;
 	use WithIcon;
 	
-	public function renderCell() : string
+	public function renderHTML() : string
 	{
 		return GDT_Template::php('News', 'cell/newsletter_status.php', ['field'=>$this]);
 	}

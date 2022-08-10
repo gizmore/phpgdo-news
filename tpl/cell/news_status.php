@@ -18,4 +18,4 @@ elseif ($news->isSending())
 }
 $lbl = GDT_Paragraph::make()->icon($icon)->text($lbl);
 
-echo $lbl->renderCell();
+echo $lbl->renderHTML();

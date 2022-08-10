@@ -8,4 +8,4 @@ $bar->addFields(
 	GDT_Link::make('link_write_news')->href(href('News', 'Write')),
 	GDT_Link::make('link_newsletters')->href(href('News', 'Newsletters')),
 );
-echo $bar->renderCell();
+echo $bar->renderHTML();

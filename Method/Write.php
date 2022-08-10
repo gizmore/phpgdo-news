@@ -57,7 +57,7 @@ final class Write extends MethodForm
 	{
 		$news = GDO_News::table();
 		
-		$form->textRaw(GDT_NewsStatus::make('status')->gdo($news)->renderCell());
+		$form->textRaw(GDT_NewsStatus::make('status')->gdo($news)->renderHTML());
 		
 		# Category select
 		$form->addFields(
