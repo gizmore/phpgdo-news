@@ -17,15 +17,15 @@ use GDO\UI\GDT_Message;
 use GDO\UI\GDT_Divider;
 use GDO\UI\GDT_Tab;
 use GDO\UI\GDT_Tabs;
-use GDO\Util\Common;
 use GDO\UI\GDT_Title;
+use GDO\Core\GDT_Object;
 
 /**
  * Write a news entry.
  * This is a bit more complex form with tabs for each edited language.
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 7.0.1
  * @since 3.0.0
  */
 final class Write extends MethodForm
@@ -34,17 +34,18 @@ final class Write extends MethodForm
 	
 	public function getPermission() : ?string { return 'staff'; }
 	
-	/**
-	 * @var GDO_News
-	 */
-	private $news;
+	private ?GDO_News $news = null;
+	
+	public function gdoParameters() : array
+	{
+		return [
+			GDT_Object::make('id')->table(GDO_News::table()),
+		];
+	}
 	
 	public function onInit()
 	{
-		if ($id = Common::getRequestString('id'))
-		{
-			$this->news = GDO_News::table()->find($id);
-		}
+		$this->news = $this->gdoParameterValue('id');
 	}
 	
 	public function beforeExecute() : void
