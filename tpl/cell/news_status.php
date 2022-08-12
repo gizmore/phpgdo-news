@@ -1,6 +1,8 @@
 <?php
 use GDO\News\GDT_NewsStatus;
 use GDO\UI\GDT_Paragraph;
+use GDO\UI\GDT_IconUTF8;
+use GDO\UI\GDT_Icon;
 /** @var $field GDT_NewsStatus **/
 $news = $field->getNews();
 
@@ -16,6 +18,7 @@ elseif ($news->isSending())
 	$icon = 'done';
 	$lbl = 'newsletter_status_in_queue';
 }
-$lbl = GDT_Paragraph::make()->icon($icon)->text($lbl);
+$icon = GDT_Icon::iconS($icon);
+$lbl = GDT_Paragraph::make()->textRaw($icon . ' ' . t($lbl));
 
-echo $lbl->renderHTML();
+echo $lbl->render();

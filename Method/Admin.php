@@ -12,8 +12,10 @@ use GDO\UI\GDT_Title;
 
 /**
  * Overview of news entries.
+ * 
  * @author gizmore
- * @version 6.10
+ * @version 7.0.1
+ * @since 6.10.0
  */
 final class Admin extends MethodQueryTable
 {
@@ -24,6 +26,8 @@ final class Admin extends MethodQueryTable
 	public function getPermission() : ?string { return 'staff'; }
 	
 	public function getDefaultOrder() : ?string { return 'news_created DESC'; }
+	
+	public function getMethodTitle() : string { return t('list_news_newslist'); }
 	
 	public function gdoHeaders() : array
 	{

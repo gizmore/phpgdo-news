@@ -43,26 +43,34 @@ final class Write extends MethodForm
 		];
 	}
 	
-	public function onInit()
+	protected function getNews() : ?GDO_News
 	{
-		$this->news = $this->gdoParameterValue('id');
+		if (!isset($this->news))
+		{
+			$this->news = $this->gdoParameterValue('id');
+		}
+		return $this->news;
 	}
 	
 	public function beforeExecute() : void
 	{
-		$this->renderNavBar('News');
+// 		$this->renderNavBar('News');
 		Module_News::instance()->renderAdminTabs();
 	}
 	
 	public function createForm(GDT_Form $form) : void
 	{
-		$news = GDO_News::table();
+		$news = $this->getNews();
+		$table = GDO_News::table();
 		
-		$form->textRaw(GDT_NewsStatus::make('status')->gdo($news)->renderHTML());
+		if ($news)
+		{
+			$form->textRaw(GDT_NewsStatus::make('status')->gdo($news)->renderHTML());
+		}
 		
 		# Category select
 		$form->addFields(
-			$news->gdoColumn('news_category'),
+			$table->gdoColumn('news_category'),
 			GDT_Divider::make('div_texts'),
 		);
 		
@@ -75,7 +83,7 @@ final class Write extends MethodForm
 
 			# 2 Fields
 			$primary = $iso === GDO_LANGUAGE;
-			$title = GDT_Title::make()->name("iso][$iso][newstext_title")->label('title')->notNull($primary);
+			$title = GDT_Title::make()->name("newstext_title_{$iso}")->label('title')->notNull($primary);
 			$message = $this->makeMessageField($iso); 
 			
 			if ($this->news)
@@ -127,7 +135,7 @@ final class Write extends MethodForm
 	private function makeMessageField(string $iso) : GDT_Message
 	{
 	    $primary = $iso === GDO_LANGUAGE;
-	    return GDT_Message::make("newstext_message[{$iso}]")->label('message')->notNull($primary);
+	    return GDT_Message::make("newstext_message_{$iso}")->label('message')->notNull($primary);
 	}
 	
 	private function updateNews(GDT_Form $form)
@@ -139,10 +147,11 @@ final class Write extends MethodForm
 	    $news->save();
 	    
 	    # Update texts
-	    foreach ($_REQUEST[$form->name]['iso'] as $iso => $data)
+	    foreach (Module_Language::instance()->cfgSupported() as $language)
 	    {
-	        $title = trim($data['newstext_title']);
-	        $message = trim($data['newstext_message']);
+	    	$iso = $language->getISO();
+	    	$title = $this->gdoParameterVar("newstext_title_{$iso}");
+	    	$message = $this->gdoParameterVar("newstext_message_{$iso}");
 	        if ($title && $message)
 	        {
 	            GDO_NewsText::blank([
@@ -174,8 +183,8 @@ final class Write extends MethodForm
 		}
 		
 		$hrefEdit = href('News', 'Write', '&id='.$news->getID());
-		$this->redirectMessage('msg_news_created', null, $hrefEdit);
-		return $this->renderPage();
+		return $this->redirectMessage('msg_news_created', null, $hrefEdit);
+// 		return $this->renderPage();
 	}
 	
 	public function onSubmit_visible(GDT_Form $form)
