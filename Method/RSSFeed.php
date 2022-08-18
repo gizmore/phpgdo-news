@@ -4,7 +4,13 @@ namespace GDO\News\Method;
 use GDO\Core\Method;
 use GDO\News\GDO_News;
 use GDO\News\RSS;
+use GDO\Core\Application;
 
+/**
+ * Render news RSS feed.
+ * 
+ * @author gizmore
+ */
 final class RSSFeed extends Method
 {
 	public function execute()
@@ -20,6 +26,16 @@ final class RSSFeed extends Method
 			$items,
 			url('News', 'List'),
 			url('News', 'RSSFeed'));
-		die($feed->render());
+		
+		
+		$app = Application::$INSTANCE;
+		if (!$app->isUnitTests())
+		{
+			$rss = $feed->render();
+			$app->timingHeader();
+			echo $rss;
+			die(0);
+		}
 	}
+
 }
