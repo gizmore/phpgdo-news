@@ -55,6 +55,9 @@ final class Write extends MethodForm
 	public function beforeExecute() : void
 	{
 // 		$this->renderNavBar('News');
+// 		$this->renderAdminBar();
+// 		Module_News::instance()->renderAdminTabs();
+		$this->renderAdminBar();
 		Module_News::instance()->renderAdminTabs();
 	}
 	
@@ -98,7 +101,7 @@ final class Write extends MethodForm
 			# Add
 			$tab->addField($title);
 			$tab->addField($message);
-			$tabs->tab($tab);
+			$tabs->addTab($tab);
 		}
 		$form->addField($tabs);
 			

@@ -12,5 +12,5 @@ final class Comments extends Comments_List
 	public function hrefAdd() { return href('News', 'Comments', 'id='.$this->object->getID()); }
 	
 	public function isGuestAllowed() : bool { return Module_News::instance()->cfgGuestNews(); }
-	
+
 }
