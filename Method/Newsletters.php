@@ -21,6 +21,11 @@ final class Newsletters extends MethodQueryTable
 	
 	public function getPermission() : ?string { return 'staff'; }
 	
+	public function getMethodTitle() : string
+	{
+		return t('mt_news_newsletterabbo');
+	}
+	
 	public function gdoTable() : GDO { return GDO_Newsletter::table(); }
 	
 	public function beforeExecute() : void
