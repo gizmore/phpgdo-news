@@ -30,7 +30,7 @@ final class NewsTest extends TestCase
 		];
 		$response = GDT_MethodTest::make()->method($method)
 			->parameters($parameters)
-			->execute();
+			->execute('submit');
 		$this->assert200("Check if a News::Write entry can be created.");
 		assertEquals(1, GDO_News::table()->countWhere(), 'check if news were created.');
 
@@ -39,7 +39,7 @@ final class NewsTest extends TestCase
 		$parameters['newstext_message_de'] = '<div>Ich freue mich zu verkünden<br/><br/>Eine umfangreiche GDO6-Demo hat das Licht der Welt entdeckt.<br/><br/>Viel Spaß beim hacken!</div>';
 		$response = GDT_MethodTest::make()->method($method)
 			->parameters($parameters)
-			->execute();
+			->execute('submit');
 		$html = $response->renderMode(GDT::RENDER_HTML);
 		assertStringContainsString('freue mich zu verk', $html, 'Check if news message got changed.');
 		assertEquals(1, GDO_News::table()->countWhere(), 'check if newscount still 1');

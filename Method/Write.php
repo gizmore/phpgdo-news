@@ -31,10 +31,10 @@ use GDO\Core\GDT_Object;
 final class Write extends MethodForm
 {
 	use MethodAdmin;
+
+	private ?GDO_News $news = null;
 	
 	public function getPermission() : ?string { return 'staff'; }
-	
-	private ?GDO_News $news = null;
 	
 	public function gdoParameters() : array
 	{
@@ -54,9 +54,6 @@ final class Write extends MethodForm
 	
 	public function beforeExecute() : void
 	{
-// 		$this->renderNavBar('News');
-// 		$this->renderAdminBar();
-// 		Module_News::instance()->renderAdminTabs();
 		$this->renderAdminBar();
 		Module_News::instance()->renderAdminTabs();
 	}
@@ -132,8 +129,6 @@ final class Write extends MethodForm
 	
 	/**
 	 * Make a message field for an iso.
-	 * @param string $iso
-	 * @return GDT_Message
 	 */
 	private function makeMessageField(string $iso) : GDT_Message
 	{
@@ -187,7 +182,6 @@ final class Write extends MethodForm
 		
 		$hrefEdit = href('News', 'Write', '&id='.$news->getID());
 		return $this->redirectMessage('msg_news_created', null, $hrefEdit);
-// 		return $this->renderPage();
 	}
 	
 	public function onSubmit_visible(GDT_Form $form)
