@@ -12,13 +12,15 @@ use GDO\News\GDT_NewsStatus;
 use GDO\News\Module_News;
 use GDO\News\GDO_News;
 use GDO\News\GDO_NewsText;
-use GDO\UI\GDT_Card;
 use GDO\UI\GDT_Message;
 use GDO\UI\GDT_Divider;
 use GDO\UI\GDT_Tab;
 use GDO\UI\GDT_Tabs;
 use GDO\UI\GDT_Title;
 use GDO\Core\GDT_Object;
+use GDO\UI\GDT_HTML;
+use GDO\Core\GDT_Tuple;
+use GDO\Language\Trans;
 
 /**
  * Write a news entry.
@@ -108,18 +110,24 @@ final class Write extends MethodForm
 		# Dynamic buttons
 		if ($this->news)
 		{
-			$form->actions()->addField(GDT_Submit::make('preview')->label('btn_preview'));
+			$form->actions()->addField(
+				GDT_Submit::make('preview')->label('btn_preview')->
+					onclick([$this, 'onSubmit_preview']));
 			
 			if (!$this->news->isVisible())
 			{
-			    $form->actions()->addField(GDT_Submit::make('visible')->label('btn_visible'));
+			    $form->actions()->addField(
+			    	GDT_Submit::make('visible')->label('btn_visible')->
+			    		onclick([$this, 'onSubmit_visible']));
 			}
 			else
 			{
 			    $form->actions()->addField(GDT_Submit::make('invisible')->label('btn_invisible'));
 				if (!$this->news->isSent())
 				{
-				    $form->actions()->addField(GDT_Submit::make('send')->label('btn_send_mail'));
+				    $form->actions()->addField(
+				    	GDT_Submit::make('send')->label('btn_send_mail')->
+				    		onclick([$this, 'onSubmit_send']));
 				}
 			}
 		}
@@ -208,11 +216,22 @@ final class Write extends MethodForm
 	{
 	    # Save
 	    $this->updateNews($form);
+
+	    # Render preview cards in all isos
+	    $iso = Trans::$ISO;
+	    $response = GDT_Tuple::make();
+	    foreach (Module_Language::instance()->cfgSupported() as $language)
+	    {
+	    	Trans::setISO($language->getISO());
+		    $card = GDT_HTML::make()->var($this->news->renderCard());
+		    $response->addField($card);
+	    }
+	    Trans::setISO($iso);
 	    
-	    # Show card and form
-	    return GDT_Card::make()->gdo($this->news)->
-    	    addField(GDT_Divider::make())->
-    	    addField($this->renderPage());
+	    # Add default response
+	    $response->addField(GDT_Divider::make());
+	    $response->addField($this->renderPage());
+	    return $response;
 	}
 	
 	public function onSubmit_send(GDT_Form $form)

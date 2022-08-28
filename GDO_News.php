@@ -21,7 +21,7 @@ use GDO\Date\Time;
  * News database entity and table.
  * 
  * @author gizmore
- * @version 6.11.1
+ * @version 7.0.1
  * @since 2.0.0
  * @see GDO_NewsText
  */
@@ -31,6 +31,7 @@ final class GDO_News extends GDO implements RSSItem
 	### Comments ###
 	################
 	use CommentedObject;
+	
 	public function gdoCommentTable() { return GDO_NewsComments::table(); }
 	public function gdoCommentsEnabled() { return $this->isVisible() && $this->gdoCommentTable()->gdoEnabled(); }
 	public function gdoCanComment(GDO_User $user) { return true; }
@@ -64,10 +65,7 @@ final class GDO_News extends GDO implements RSSItem
 	public function isSending() { return ($this->getSentDate() === null) && ($this->getSendDate() !== null); }
 	public function displayName() { return $this->getTitle(); }
 	
-	/**
-	 * @return GDO_Category
-	 */
-	public function getCategory() { return $this->gdoValue('news_category'); }
+	public function getCategory() : ?GDO_Category { return $this->gdoValue('news_category'); }
 	public function getCategoryID() { return $this->gdoVar('news_category'); }
 	public function isVisible() { return $this->gdoVar('news_visible') === '1'; }
 	public function getSendDate() { return $this->gdoVar('news_send'); }
@@ -75,10 +73,7 @@ final class GDO_News extends GDO implements RSSItem
 	public function getCreateDate() { return $this->gdoVar('news_created'); }
 	public function displayDay() { return tt($this->getCreateDate(), 'day'); }
 	
-	/**
-	 * @return GDO_User
-	 */
-	public function getCreator() { return $this->gdoValue('news_creator'); }
+	public function getCreator() : GDO_User { return $this->gdoValue('news_creator'); }
 	public function getCreatorID() { return $this->gdoVar('news_creator'); }
 	
 	### Perm ###
@@ -108,23 +103,20 @@ final class GDO_News extends GDO implements RSSItem
 		return $text->gdoColumn('newstext_message')->var($text->getMessage())->renderHTML();
 	}
 
-	public function renderCard() : string { return GDT_Template::php('News', 'card/gwf_news.php', ['gdo'=>$this]); }
+	public function renderCard() : string
+	{
+		return GDT_Template::php('News', 'news_card.php', ['news' => $this]);
+	}
+	
 	###################
 	### Translation ###
 	###################
-	/**
-	 * @return GDO_NewsText
-	 */
-	public function getTxt()
+	public function getTxt() : ?GDO_NewsText
 	{
 		return $this->getText(Trans::$ISO);
 	}
 	
-	/**
-	 * @param string $iso
-	 * @return GDO_NewsText
-	 */
-	public function getText($iso, $fallback=true)
+	public function getText(string $iso, bool $fallback=true) : ?GDO_NewsText
 	{
 		$texts = $this->getTexts();
 		if (isset($texts[$iso]))
@@ -136,12 +128,13 @@ final class GDO_News extends GDO implements RSSItem
 			return isset($texts[GDO_LANGUAGE]) ?
 			    $texts[GDO_LANGUAGE] : array_shift($texts);
 		}
+		return null;
 	}
 
 	/**
 	 * @return GDO_NewsText[]
 	 */
-	public function getTexts()
+	public function getTexts() : array
 	{
 		if (null === ($cache = $this->tempGet('newstexts')))
 		{
