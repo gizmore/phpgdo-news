@@ -9,24 +9,24 @@ use GDO\News\GDO_Newsletter;
 
 /**
  * Table of newsletter subscriptions.
+ * 
  * @author gizmore
- * @version 6.10
- * @since 6.0
+ * @version 7.0.1
+ * @since 6.0.0
  */
 final class Newsletters extends MethodQueryTable
 {
 	use MethodAdmin;
-	
-	public function getTitleLangKey() { return 'link_newsletters'; }
-	
-	public function getPermission() : ?string { return 'staff'; }
 	
 	public function getMethodTitle() : string
 	{
 		return t('mt_news_newsletterabbo');
 	}
 	
-	public function gdoTable() : GDO { return GDO_Newsletter::table(); }
+	public function gdoTable() : GDO
+	{
+		return GDO_Newsletter::table();
+	}
 	
 	public function beforeExecute() : void
 	{

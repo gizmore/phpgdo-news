@@ -5,6 +5,7 @@ use GDO\Category\GDO_Category;
 use GDO\Category\GDT_Category;
 use GDO\Comments\CommentedObject;
 use GDO\Core\GDO;
+use GDO\Core\GDT;
 use GDO\Core\GDT_AutoInc;
 use GDO\Core\GDT_CreatedAt;
 use GDO\Core\GDT_CreatedBy;
@@ -125,10 +126,23 @@ final class GDO_News extends GDO implements RSSItem
 		}
 		if ($fallback)
 		{
-			return isset($texts[GDO_LANGUAGE]) ?
-			    $texts[GDO_LANGUAGE] : array_shift($texts);
+			if (isset($texts[GDO_LANGUAGE]))
+			{
+				return $texts[GDO_LANGUAGE];
+			}
+			if (count($texts))
+			{
+				return array_shift($texts);
+			}
 		}
-		return null;
+		return GDO_NewsText::blank([
+			'newstext_news' => $this->getID(),
+			'newstext_lang' => $iso,
+			'newstext_title' => t('none'),
+			'newstext_message' => t('none'),
+			'newstext_created' => null,
+			'newstext_creator' => '1',
+		]);
 	}
 
 	/**
@@ -136,6 +150,10 @@ final class GDO_News extends GDO implements RSSItem
 	 */
 	public function getTexts() : array
 	{
+		if (!$this->isPersisted())
+		{
+			return GDT::EMPTY_ARRAY;
+		}
 		if (null === ($cache = $this->tempGet('newstexts')))
 		{
 			$query = GDO_NewsText::table()->select('newstext_lang, gdo_newstext.*');
@@ -161,7 +179,10 @@ final class GDO_News extends GDO implements RSSItem
 	##############
 	public function renderCLI() : string
 	{
-		return 'H!';
+		$id = $this->getID();
+		$title = $this->getTitle();
+		$date = $this->displayDay();
+		return "{$id}-{$title}({$date})";
 	}
 	
 }
