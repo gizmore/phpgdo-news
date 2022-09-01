@@ -37,7 +37,7 @@ class NewsList extends MethodQueryCards
 		return parent::getQuery()->where('news_visible')->joinObject('newstext');
 	}
 	
-	public function beforeExecute() : void
+	public function onRenderTabs() : void
 	{
 	    Module_News::instance()->renderTabs();
 	}

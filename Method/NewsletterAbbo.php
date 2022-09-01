@@ -37,7 +37,7 @@ final class NewsletterAbbo extends MethodForm
 		return false;
 	}
 	
-	public function beforeExecute() : void
+	public function onRenderTabs() : void
 	{
 	    Module_News::instance()->renderTabs();
 	}

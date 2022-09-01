@@ -28,7 +28,7 @@ final class Newsletters extends MethodQueryTable
 		return GDO_Newsletter::table();
 	}
 	
-	public function beforeExecute() : void
+	public function onRenderTabs() : void
 	{
 	    $this->renderAdminBar();
 	    Module_News::instance()->renderAdminTabs();

@@ -54,7 +54,7 @@ final class Write extends MethodForm
 		return $this->news;
 	}
 	
-	public function beforeExecute() : void
+	public function onRenderTabs() : void
 	{
 		$this->renderAdminBar();
 		Module_News::instance()->renderAdminTabs();

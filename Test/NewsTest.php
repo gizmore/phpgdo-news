@@ -8,6 +8,9 @@ use GDO\News\GDO_News;
 use function PHPUnit\Framework\assertStringContainsString;
 use function PHPUnit\Framework\assertEquals;
 use GDO\Core\GDT;
+use GDO\News\Method\WriteComment;
+use GDO\News\GDO_NewsComments;
+use GDO\UI\GDT_Redirect;
 
 /**
  * Tests for the news module.
@@ -21,6 +24,7 @@ final class NewsTest extends TestCase
 {
 	public function testNews()
 	{
+		# Create
 		$method = Write::make();
 		$parameters = [
 			'newstext_title_en' => 'Test news entry',
@@ -29,20 +33,35 @@ final class NewsTest extends TestCase
 			'newstext_message_de' => '<div>Ich freue zu verkünden<br/><br/>Eine umfangreiche GDO6-Demo hat das Licht der Welt entdeckt.<br/><br/>Viel Spaß beim hacken!</div>',
 		];
 		$response = GDT_MethodTest::make()->method($method)
-			->parameters($parameters)
+			->inputs($parameters)
 			->execute('submit');
-		$this->assert200("Check if a News::Write entry can be created.");
+		$this->assertCode(GDT_Redirect::CODE, "Check if a News::Write entry can be created.");
 		assertEquals(1, GDO_News::table()->countWhere(), 'check if news were created.');
 
+		# Edit
 		$method = Write::make();
 		$parameters['id'] = '1';
 		$parameters['newstext_message_de'] = '<div>Ich freue mich zu verkünden<br/><br/>Eine umfangreiche GDO6-Demo hat das Licht der Welt entdeckt.<br/><br/>Viel Spaß beim hacken!</div>';
 		$response = GDT_MethodTest::make()->method($method)
-			->parameters($parameters)
+			->inputs($parameters)
 			->execute('submit');
 		$html = $response->renderMode(GDT::RENDER_HTML);
 		assertStringContainsString('freue mich zu verk', $html, 'Check if news message got changed.');
 		assertEquals(1, GDO_News::table()->countWhere(), 'check if newscount still 1');
+		
+		# Add a comment
+		$amt = GDO_NewsComments::table()->countWhere();
+		$method = WriteComment::make();
+		$parameters = [
+			'id' => '1',
+			'comment_message' => 'Ein wirklich gute Nachricht! :)',
+		];
+		$response = GDT_MethodTest::make()->method($method)
+			->inputs($parameters)
+			->execute('submit');
+		$html = $response->renderMode(GDT::RENDER_WEBSITE);
+		assertEquals($amt+1, GDO_NewsComments::table()->countWhere(), 'Check if comment-count is now 1.');
+		$this->assertOK("Check if a News::WriteComment entry can be created.");
 	}
 
 }

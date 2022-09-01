@@ -52,7 +52,7 @@ final class Admin extends MethodQueryTable
 	    return $query;
 	}
 	
-	public function beforeExecute() : void
+	public function onRenderTabs() : void
 	{
 	    $this->renderAdminBar();
 	    Module_News::instance()->renderAdminTabs();
