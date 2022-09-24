@@ -17,7 +17,7 @@ use GDO\Core\Website;
  */
 final class Module_News extends GDO_Module
 {
-    public int $priority = 40;
+    public int $priority = 30;
     
 	##############
 	### Module ###
@@ -66,7 +66,12 @@ final class Module_News extends GDO_Module
 	############
 	public function onInit()
 	{
-		Website::addLink($this->href('RSSFeed'), 'application/rss+xml', 'alternate', t('rss_newsfeed', [sitename()]));
+		Website::addLink([
+			'href' => $this->href('RSSFeed'),
+			'type' => 'application/rss+xml',
+			'rel' => 'alternate',
+			'title' => t('rss_newsfeed', [sitename()]),
+		]);
 	}
 	
 	############
