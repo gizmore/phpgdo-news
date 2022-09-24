@@ -64,7 +64,7 @@ final class Module_News extends GDO_Module
 	############
 	### Init ###
 	############
-	public function onInit()
+	public function onModuleInit()
 	{
 		Website::addLink([
 			'href' => $this->href('RSSFeed'),
