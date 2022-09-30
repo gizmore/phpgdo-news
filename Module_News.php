@@ -7,6 +7,7 @@ use GDO\UI\GDT_Link;
 use GDO\Core\GDT_Template;
 use GDO\UI\GDT_Page;
 use GDO\Core\Website;
+use GDO\Date\GDT_Timestamp;
 
 /**
  * News module.
@@ -61,6 +62,16 @@ final class Module_News extends GDO_Module
 	public function cfgGuestComments() { return $this->getConfigValue('news_guest_comments'); }
 	public function cfgLeftBar() { return $this->getConfigValue('hook_sidebar'); }
 	
+	################
+	### Settings ###
+	################
+	public function getUserConfig() : array
+	{
+		return [
+			GDT_Timestamp::make('news_read_mark'),
+		];
+	}
+	
 	############
 	### Init ###
 	############
@@ -94,12 +105,12 @@ final class Module_News extends GDO_Module
 	    if ($this->cfgLeftBar())
 	    {
     	    GDT_Page::instance()->leftBar()->addField(
-    	        GDT_Link::make('link_news')->href(href('News', 'NewsList')));
-	    }
-	    if ($this->cfgBlogbar())
-	    {
-	        GDT_Page::instance()->leftBar()->addField(
-	            GDT_Template::make()->template('News', 'blogbar.php', ['bar'=>GDT_Page::instance()->leftBar()]));
+    	    	GDT_Link::make()->href(href('News', 'NewsList'))->icon('alert')->text('link_news', [GDO_News::numNews(), GDO_News::newNews()]));
+    	    if ($this->cfgBlogbar())
+    	    {
+    	    	GDT_Page::instance()->leftBar()->addField(
+    	    		GDT_Template::make()->template('News', 'blogbar.php', ['bar'=>GDT_Page::instance()->leftBar()]));
+    	    }
 	    }
 	}
 

@@ -17,6 +17,7 @@ use GDO\User\GDO_User;
 use GDO\Core\GDT_Join;
 use GDO\Language\GDO_Language;
 use GDO\Date\Time;
+use GDO\DB\Cache;
 
 /**
  * News database entity and table.
@@ -101,7 +102,7 @@ final class GDO_News extends GDO implements RSSItem
 	public function displayMessage()
 	{
 		$text = $this->getTxt();
-		return $text->gdoColumn('newstext_message')->var($text->getMessage())->renderHTML();
+		return $text->gdoColumn('newstext_message')->var($text->getMessage())->render();
 	}
 
 	public function renderCard() : string
@@ -183,6 +184,54 @@ final class GDO_News extends GDO implements RSSItem
 		$title = $this->getTitle();
 		$date = $this->displayDay();
 		return "{$id}-{$title}({$date})";
+	}
+	
+	##############
+	### Static ###
+	##############
+	public static function newNews() : string
+	{
+		if (!($count = self::countNewNews()))
+		{
+			return GDT::EMPTY_STRING;
+		}
+		return "&nbsp;[+{$count}]";
+	}
+
+	private static function countNewNews() : int
+	{
+		$user = GDO_User::current();
+		if (null === ($cache = $user->tempGet('new_news')))
+		{
+			$cache = self::queryNewNews($user);
+			$user->tempSet('new_news', $cache);
+		}
+		return $cache;
+	}
+	
+	private static function queryNewNews(GDO_User $user) : int
+	{
+		if (!($date = $user->settingVar('News', 'news_read_mark')))
+		{
+			return 0;
+		}
+		$count = self::table()->countWhere("news_visible AND news_created > '$date'");
+		return $count;
+	}
+	
+	public static function numNews() : int
+	{
+		if (null === ($cache = Cache::get('news_count')))
+		{
+			$cache = self::queryNumNews();
+			Cache::set('news_count', $cache);
+		}
+		return $cache;
+	}
+	
+	private static function queryNumNews() : int
+	{
+		return self::table()->countWhere("news_visible");
 	}
 	
 }

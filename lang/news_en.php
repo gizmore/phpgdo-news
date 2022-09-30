@@ -3,7 +3,7 @@ namespace GDO\News\lang;
 return [
 	##################################################
 	'link_write_news' => 'Write&nbsp;News',
-	'link_news' => 'News',
+	'link_news' => '%s News%s',
 	'link_newsfeed' => 'RSS',
 	'link_newsletter' => 'Newsletter',
 	'link_newsletters' => 'Newsletters',
