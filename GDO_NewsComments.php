@@ -9,8 +9,4 @@ final class GDO_NewsComments extends GDO_CommentTable
 	public function gdoAllowFiles() { return false; }
 	public function gdoEnabled() { return Module_News::instance()->cfgComments(); }
 
-	public function renderCard() : string
-	{
-	}
-	
 }
