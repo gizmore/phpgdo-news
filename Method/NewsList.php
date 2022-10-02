@@ -16,7 +16,7 @@ use GDO\Table\MethodQueryCards;
  */
 class NewsList extends MethodQueryCards
 {
-	public function getMethodTitle() : string { return t('link_news'); }
+	public function getMethodTitle() : string { return t('list_news_newslist'); }
 	
 	public function gdoTable() : GDO { return GDO_News::table(); }
 	
