@@ -24,6 +24,8 @@ final class NewsTest extends TestCase
 {
 	public function testNews()
 	{
+		$numNews = GDO_News::table()->countWhere();
+		
 		# Create
 		$method = Write::make();
 		$parameters = [
@@ -36,7 +38,7 @@ final class NewsTest extends TestCase
 			->inputs($parameters)
 			->execute('submit');
 		$this->assertCode(GDT_Redirect::CODE, "Check if a News::Write entry can be created.");
-		assertEquals(1, GDO_News::table()->countWhere(), 'check if news were created.');
+		assertEquals($numNews+1, GDO_News::table()->countWhere(), 'check if news were created.');
 
 		# Edit
 		$method = Write::make();
@@ -47,7 +49,7 @@ final class NewsTest extends TestCase
 			->execute('submit');
 		$html = $response->renderMode(GDT::RENDER_HTML);
 		assertStringContainsString('freue mich zu verk', $html, 'Check if news message got changed.');
-		assertEquals(1, GDO_News::table()->countWhere(), 'check if newscount still 1');
+		assertEquals($numNews+1, GDO_News::table()->countWhere(), 'check if newscount still 1');
 		
 		# Add a comment
 		$amt = GDO_NewsComments::table()->countWhere();
