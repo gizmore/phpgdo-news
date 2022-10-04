@@ -29,7 +29,7 @@ foreach ($categorized as $cat => $items)
 {
 	if ($category = GDO_Category::getById($cat))
 	{
-		printf('<div class="gdo-category-title">%s</div>', $category->displayName());
+		printf('<div class="gdo-category-title">%s</div>', $category->renderName());
 	}
 	else
 	{
