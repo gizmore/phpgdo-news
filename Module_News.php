@@ -31,6 +31,12 @@ final class Module_News extends GDO_Module
 			'Comments', 'Category', 'Mail',
 		];
 	}
+	public function getFriendencies() : array
+	{
+		return [
+			'GTranslate',
+		];
+	}
 	public function getClasses() : array
 	{
 	    return [

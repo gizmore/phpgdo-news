@@ -21,9 +21,12 @@ use GDO\Core\GDT_Object;
 use GDO\UI\GDT_HTML;
 use GDO\Core\GDT_Tuple;
 use GDO\Language\Trans;
+use GDO\UI\GDT_Menu;
+use GDO\Language\GDT_Language;
 
 /**
- * Write a news entry.
+ * Write and edit a news entry. Put in mailqueue and translate.
+ * 
  * This is a bit more complex form with tabs for each edited language.
  * 
  * @author gizmore
@@ -70,6 +73,12 @@ final class Write extends MethodForm
 			$form->textRaw(GDT_NewsStatus::make('status')->gdo($news)->renderHTML());
 		}
 		
+		if ($gt = module_enabled('GTranslate'))
+		{
+			$sourceIso = GDT_Language::make('source_iso')->initialCurrent();
+			$form->addFields($sourceIso);
+		}
+		
 		# Category select
 		$form->addFields(
 			$table->gdoColumn('news_category'),
@@ -101,6 +110,15 @@ final class Write extends MethodForm
 			$tab->addField($title);
 			$tab->addField($message);
 			$tabs->addTab($tab);
+			if ($gt)
+			{
+				if ($sourceIso->getVar() !== $iso)
+				{
+					$tab->addField(GDT_Menu::make()->addField(
+						GDT_Submit::make()->onclick([$this, 'onTranslateLanguage'], $iso),
+					));
+				}
+			}
 		}
 		$form->addField($tabs);
 			
@@ -110,9 +128,16 @@ final class Write extends MethodForm
 		# Dynamic buttons
 		if ($this->news)
 		{
-			$form->actions()->addField(
-				GDT_Submit::make('preview')->label('btn_preview')->
-					onclick([$this, 'onSubmit_preview']));
+			$form->actions()->addFields(
+				GDT_Submit::make('preview')->label('btn_preview')
+					->onclick([$this, 'onSubmit_preview']));
+			
+			if ($gt)
+			{
+				$form->actions()->addFields(
+					GDT_Submit::make('translate_all')->label('translate_all')
+						->onclick([$this, 'onTranslateAll']));
+			}
 			
 			if (!$this->news->isVisible())
 			{
@@ -238,6 +263,27 @@ final class Write extends MethodForm
 	{
 		$this->news->saveVar('news_send', Time::getDate());
 		return $this->message('msg_news_queue')->addField($this->renderPage());
+	}
+	
+	#################
+	### Translate ###
+	#################
+	public function onTranslateAll(GDT_Form $form)
+	{
+		$langs = Module_Language::instance()->cfgSupported();
+		foreach (array_keys($langs) as $iso)
+		{
+			$this->onTranslateLanguage($iso);
+		}
+	}
+
+	public function onTranslateLanguage(string $iso)
+	{
+		$src = $this->gdoParameter('source_iso');
+		if ($src !== $iso)
+		{
+			$this->message('msg_news_translated', [$src, $iso]);
+		}
 	}
 	
 }

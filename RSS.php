@@ -81,7 +81,7 @@ final class RSS
 	
 	public function render()
 	{
-		header("Content-Type: application/xml; charset=UTF-8");
+		hdr("Content-Type: application/xml; charset=UTF-8");
 		
 		$rss_date = self::displayDate($this->guessRSSDate());
 		
