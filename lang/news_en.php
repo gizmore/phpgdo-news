@@ -80,4 +80,6 @@ The %2$s Team',
 	'rss_newsfeed' => '%s Newsfeed',
 	'mt_news_rssfeed' => 'Newsfeed',
 	'mt_news_unsubscribe' => 'Unsubscribe Newsletter',
+	'news_read_mark' => 'News Readmark',
 ];
+

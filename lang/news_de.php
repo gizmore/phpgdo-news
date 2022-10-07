@@ -80,4 +80,5 @@ Das %2$s Team',
 'rss_newsfeed' => '%s Newsfeed',
 'mt_news_rssfeed' => 'Newsfeed',
 'mt_news_unsubscribe' => 'Newsletter abbestellen',
+'news_read_mark' => 'News Lesemarke',
 );

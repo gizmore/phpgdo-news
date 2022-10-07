@@ -8,6 +8,7 @@ use GDO\Core\GDT_Template;
 use GDO\UI\GDT_Page;
 use GDO\Core\Website;
 use GDO\Date\GDT_Timestamp;
+use GDO\User\GDT_ACLRelation;
 
 /**
  * News module.
@@ -75,6 +76,13 @@ final class Module_News extends GDO_Module
 	{
 		return [
 			GDT_Timestamp::make('news_read_mark'),
+		];
+	}
+	
+	public function getACLDefaults(): ?array
+	{
+		return[
+			'news_read_mark' => [GDT_ACLRelation::HIDDEN, 0, null],
 		];
 	}
 	
