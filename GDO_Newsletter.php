@@ -12,6 +12,7 @@ use GDO\User\GDO_User;
 
 /**
  * Newsletter abbonements.
+ * This table makes sense, as it can also hold unknown email recipients.
  * 
  * @author gizmore
  * @version 7.0.1
@@ -22,7 +23,7 @@ final class GDO_Newsletter extends GDO
 	###########
 	### GDO ###
 	###########
-	public function gdoColumns() : array
+	public function gdoColumns(): array
 	{
 		return [
 			GDT_AutoInc::make('newsletter_id'),
@@ -33,7 +34,7 @@ final class GDO_Newsletter extends GDO
 			GDT_EmailFormat::make('newsletter_fmt'),
 		];
 	}
-	public function getUser() : GDO_User { return $this->gdoValue('newsletter_user'); }
+	public function getUser(): GDO_User { return $this->gdoValue('newsletter_user'); }
 	public function getUserID() { return $this->gdoVar('newsletter_user'); }
 	public function hasUser() { return $this->getUserID() !== null; }
 	public function getLangISO() { return $this->gdoVar('newsletter_lang'); }

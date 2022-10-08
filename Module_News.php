@@ -75,7 +75,7 @@ final class Module_News extends GDO_Module
 	public function getUserConfig() : array
 	{
 		return [
-			GDT_Timestamp::make('news_read_mark'),
+			GDT_Timestamp::make('news_read_mark')->noacl()->hidden(),
 		];
 	}
 	
