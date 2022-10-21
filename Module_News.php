@@ -79,7 +79,7 @@ final class Module_News extends GDO_Module
 		];
 	}
 	
-	public function getACLDefaults(): ?array
+	public function getACLDefaults(): array
 	{
 		return[
 			'news_read_mark' => [GDT_ACLRelation::HIDDEN, 0, null],
