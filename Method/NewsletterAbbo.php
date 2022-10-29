@@ -27,6 +27,11 @@ use GDO\User\GDO_User;
  */
 final class NewsletterAbbo extends MethodForm
 {
+	public function isTrivial(): bool
+	{
+		return false;
+	}
+	
 	public function isGuestAllowed() : bool
 	{
 		return Module_News::instance()->cfgGuestNewsletter();

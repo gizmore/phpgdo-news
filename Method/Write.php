@@ -147,7 +147,9 @@ final class Write extends MethodForm
 			}
 			else
 			{
-			    $form->actions()->addField(GDT_Submit::make('invisible')->label('btn_invisible'));
+			    $form->actions()->addField(
+			    	GDT_Submit::make('invisible')->label('btn_invisible')
+			    	->onclick([$this, 'onSubmit_invisible']));
 				if (!$this->news->isSent())
 				{
 				    $form->actions()->addField(
