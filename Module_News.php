@@ -91,12 +91,6 @@ final class Module_News extends GDO_Module
 	############
 	public function onModuleInit()
 	{
-		Website::addLink([
-			'href' => $this->href('RSSFeed'),
-			'type' => 'application/rss+xml',
-			'rel' => 'alternate',
-			'title' => t('rss_newsfeed', [sitename()]),
-		]);
 	}
 	
 	############
@@ -116,7 +110,13 @@ final class Module_News extends GDO_Module
 	
 	public function onInitSidebar() : void
 	{
-	    if ($this->cfgLeftBar())
+		Website::addLink([
+			'href' => $this->href('RSSFeed'),
+			'type' => 'application/rss+xml',
+			'rel' => 'alternate',
+			'title' => t('rss_newsfeed', [sitename()]),
+		]);
+		if ($this->cfgLeftBar())
 	    {
     	    GDT_Page::instance()->leftBar()->addField(
     	    	GDT_Link::make()->href(href('News', 'NewsList'))->icon('alert')->text('link_news', [GDO_News::numNews(), GDO_News::newNews()]));
