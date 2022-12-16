@@ -102,7 +102,7 @@ final class GDO_News extends GDO implements RSSItem
 	public function displayMessage()
 	{
 		$text = $this->getTxt();
-		return $text->gdoColumn('newstext_message')->var($text->getMessage())->render();
+		return $text->gdoVar('newstext_message_output');
 	}
 
 	public function renderCard() : string
