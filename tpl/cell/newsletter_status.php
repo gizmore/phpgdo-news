@@ -1,9 +1,10 @@
 <?php
-use GDO\News\GDT_NewsletterStatus;
+
 use GDO\News\GDO_Newsletter;
+use GDO\News\GDT_NewsletterStatus;
 use GDO\UI\GDT_Link;
 
-/** @var $field GDT_NewsletterStatus **/
+/** @var $field GDT_NewsletterStatus * */
 $user = $field->getUser();
 
 if ($user->isMember())
@@ -26,4 +27,4 @@ else
 	$field->text('newsletter_sub_guest_unknown');
 }
 ?>
-<div class="gdt-paragraph"><?= $field->htmlIcon() . ' ' . $field->renderText(); ?></div>
+<div class="gdt-paragraph"><?=$field->htmlIcon() . ' ' . $field->renderText();?></div>

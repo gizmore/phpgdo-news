@@ -1,5 +1,6 @@
 <?php
 namespace GDO\News\lang;
+
 return [
 	##################################################
 	'link_write_news' => 'Write&nbsp;News',
@@ -76,10 +77,9 @@ The %2$s Team',
 	'news_visible' => 'Visible',
 	'news_sending' => 'In Queue?',
 	'news_sent' => 'Sent',
-	'list_news_newsletters' => '%s Newsletters abbonemented', 
+	'list_news_newsletters' => '%s Newsletters abbonemented',
 	'rss_newsfeed' => '%s Newsfeed',
 	'mt_news_rssfeed' => 'Newsfeed',
 	'mt_news_unsubscribe' => 'Unsubscribe Newsletter',
 	'news_read_mark' => 'News Readmark',
 ];
-

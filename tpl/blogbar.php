@@ -1,8 +1,10 @@
 <?php
-use GDO\UI\GDT_Bar;
-use GDO\News\GDO_News;
+
 use GDO\Category\GDO_Category;
-/** @var $bar GDT_Bar **/
+use GDO\News\GDO_News;
+use GDO\UI\GDT_Bar;
+
+/** @var $bar GDT_Bar * */
 
 $table = GDO_News::table();
 $query = $table->select()->order('news_created', 0);
@@ -14,7 +16,7 @@ while ($news = $table->fetch($result))
 {
 	if (!($cat = $news->getCategoryID()))
 	{
-		$cat = "0";
+		$cat = '0';
 	}
 	if (!isset($categorized[$cat]))
 	{

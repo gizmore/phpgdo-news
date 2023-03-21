@@ -1,34 +1,36 @@
 <?php
 namespace GDO\News\Method;
 
+use GDO\Cronjob\MethodCronjob;
 use GDO\Date\Time;
 use GDO\Mail\GDT_EmailFormat;
 use GDO\Mail\Mail;
 use GDO\News\GDO_News;
-use GDO\UI\GDT_Link;
 use GDO\News\GDO_Newsletter;
-use GDO\Cronjob\MethodCronjob;
+use GDO\UI\GDT_Link;
 
 /**
  * Send newsletter via cronjob.
- * @author gizmore
- * @since 3.0
+ *
  * @version 5.0
+ * @since 3.0
+ * @author gizmore
  */
 final class Send extends MethodCronjob
 {
+
 	public function run()
 	{
 		$table = GDO_News::table();
 		$query = $table->select();
-		$query->where("news_send IS NOT NULL AND news_sent IS NULL");
+		$query->where('news_send IS NOT NULL AND news_sent IS NULL');
 		$query->order('news_send');
 		if ($news = $table->fetch($query->first()->exec()))
 		{
 			$this->sendNewsletter($news);
 		}
 	}
-	
+
 	private function sendNewsletter(GDO_News $news)
 	{
 		$this->logNotice("Sending newsletter for {$news->getTitle()}");
@@ -44,7 +46,7 @@ final class Send extends MethodCronjob
 		$this->logNotice("Sent $count newsletter emails.");
 		$news->saveVar('news_sent', Time::getDate());
 	}
-	
+
 	private function sendNewsletterTo(GDO_News $news, GDO_Newsletter $newsletter)
 	{
 		$mail = $this->mailSkeleton($news, $newsletter);
@@ -66,7 +68,7 @@ final class Send extends MethodCronjob
 		}
 		$newsletter->saveVar('newsletter_news', $news->getID());
 	}
-		
+
 	private function mailSkeleton(GDO_News $news, GDO_Newsletter $newsletter)
 	{
 		$user = $newsletter->getUser();
@@ -78,12 +80,12 @@ final class Send extends MethodCronjob
 		$author = $news->getCreator()->renderUserName();
 		$message = html($news->getMessageISO($iso));
 		$unsubscribeLink = GDT_Link::anchor(
-				url('News', 'Unsubscribe', '&id='.$newsletter->getID().'&token='.$newsletter->gdoHashcode()));
+			url('News', 'Unsubscribe', '&id=' . $newsletter->getID() . '&token=' . $newsletter->gdoHashcode()));
 		$mail = Mail::botMail();
 		$mail->setSubject(tiso($iso, 'mail_subj_newsletter', [$sitename, $title]));
 		$args = [$username, $sitename, $unsubscribeLink, $date, $title, $author, $message];
 		$mail->setBody(tiso($iso, 'mail_body_newsletter', $args));
 		return $mail;
 	}
-	
+
 }

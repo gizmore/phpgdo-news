@@ -1,9 +1,10 @@
 <?php
+
 use GDO\News\GDT_NewsStatus;
-use GDO\UI\GDT_Paragraph;
-use GDO\UI\GDT_IconUTF8;
 use GDO\UI\GDT_Icon;
-/** @var $field GDT_NewsStatus **/
+use GDO\UI\GDT_Paragraph;
+
+/** @var $field GDT_NewsStatus * */
 $news = $field->getNews();
 
 $icon = 'pause';
