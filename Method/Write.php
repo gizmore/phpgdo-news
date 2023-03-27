@@ -2,6 +2,7 @@
 namespace GDO\News\Method;
 
 use GDO\Admin\MethodAdmin;
+use GDO\Core\GDT;
 use GDO\Core\GDT_Object;
 use GDO\Core\GDT_Tuple;
 use GDO\Date\Time;
@@ -172,7 +173,7 @@ final class Write extends MethodForm
 		return GDT_Message::make("newstext_message_{$iso}")->label('message')->notNull($primary);
 	}
 
-	public function formValidated(GDT_Form $form)
+	public function formValidated(GDT_Form $form): GDT
 	{
 		$news = $this->updateNews($form);
 

@@ -19,7 +19,7 @@ use GDO\UI\GDT_Link;
 final class Send extends MethodCronjob
 {
 
-	public function run()
+	public function run(): void
 	{
 		$table = GDO_News::table();
 		$query = $table->select();

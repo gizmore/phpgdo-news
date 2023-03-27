@@ -1,6 +1,7 @@
 <?php
 namespace GDO\News\Method;
 
+use GDO\Core\GDT;
 use GDO\Core\GDT_Checkbox;
 use GDO\Form\GDT_AntiCSRF;
 use GDO\Form\GDT_Form;
@@ -33,7 +34,7 @@ final class NewsletterAbbo extends MethodForm
 		return false;
 	}
 
-	public function isGuestAllowed(): bool
+	public function isGuestAllowed(): string
 	{
 		return Module_News::instance()->cfgGuestNewsletter();
 	}
@@ -65,7 +66,7 @@ final class NewsletterAbbo extends MethodForm
 		$form->actions()->addField(GDT_Submit::make());
 	}
 
-	public function formValidated(GDT_Form $form)
+	public function formValidated(GDT_Form $form): GDT
 	{
 		return $this->formAction($form)->addField($this->renderPage());
 	}

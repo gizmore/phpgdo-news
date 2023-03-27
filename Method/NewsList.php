@@ -1,7 +1,9 @@
 <?php
+declare(strict_types=1);
 namespace GDO\News\Method;
 
 use GDO\Core\GDO;
+use GDO\Core\GDO_Error;
 use GDO\DB\Query;
 use GDO\News\GDO_News;
 use GDO\News\Module_News;
@@ -10,7 +12,7 @@ use GDO\Table\MethodQueryCards;
 /**
  * Render a list of news cards.
  *
- * @version 7.0.1
+ * @version 7.0.3
  * @since 6.5.0
  * @author gizmore
  */
@@ -23,7 +25,13 @@ class NewsList extends MethodQueryCards
 
 // 	public function useFetchInto() : bool { return false; }
 
-	public function isGuestAllowed(): bool { return Module_News::instance()->cfgGuestNews(); }
+	/**
+	 * @throws GDO_Error
+	 */
+	public function isGuestAllowed(): string
+	{
+		return Module_News::instance()->cfgGuestNews();
+	}
 
 	public function gdoHeaders(): array
 	{
