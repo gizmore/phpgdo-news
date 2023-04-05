@@ -95,7 +95,7 @@ final class RSS
 	{
 		if (count($this->items) === 0)
 		{
-			return Time::getDateTime(GDO_SITECREATED);
+			return Time::getDateTime(Time::getTimestamp(GDO_SITECREATED));
 		}
 		else
 		{
