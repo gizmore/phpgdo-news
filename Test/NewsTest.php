@@ -13,7 +13,7 @@ use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertStringContainsString;
 
 /**
- * Tests for the news module.
+ * Test for the news module.
  * Only write one entry for automated tests to kick in?
  *
  * @version 7.0.1
