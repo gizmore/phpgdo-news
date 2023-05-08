@@ -34,7 +34,7 @@ final class NewsletterAbbo extends MethodForm
 		return false;
 	}
 
-	public function isGuestAllowed(): string
+	public function isGuestAllowed(): bool
 	{
 		return Module_News::instance()->cfgGuestNewsletter();
 	}
@@ -49,7 +49,7 @@ final class NewsletterAbbo extends MethodForm
 		Module_News::instance()->renderTabs();
 	}
 
-	public function createForm(GDT_Form $form): void
+	protected function createForm(GDT_Form $form): void
 	{
 		$user = GDO_User::current();
 		$mem = $user->isMember();

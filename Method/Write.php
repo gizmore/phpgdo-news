@@ -56,7 +56,7 @@ final class Write extends MethodForm
 		];
 	}
 
-	public function createForm(GDT_Form $form): void
+	protected function createForm(GDT_Form $form): void
 	{
 		$news = $this->getNews();
 		$table = GDO_News::table();

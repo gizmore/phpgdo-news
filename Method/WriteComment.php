@@ -15,7 +15,7 @@ final class WriteComment extends Comments_Write
 
 	public function hrefList(): string { return href('News', 'Comments', '&id=' . $this->object->getID()); }
 
-	public function isGuestAllowed(): string { return Module_News::instance()->cfgGuestComments(); }
+	public function isGuestAllowed(): bool { return Module_News::instance()->cfgGuestComments(); }
 
 	public function execute(): GDT
 	{

@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace GDO\News\Method;
 
 use GDO\Core\GDO;
-use GDO\Core\GDO_Error;
+use GDO\Core\GDO_Exception;
 use GDO\DB\Query;
 use GDO\News\GDO_News;
 use GDO\News\Module_News;
@@ -26,9 +26,9 @@ class NewsList extends MethodQueryCards
 // 	public function useFetchInto() : bool { return false; }
 
 	/**
-	 * @throws GDO_Error
+	 * @throws GDO_Exception
 	 */
-	public function isGuestAllowed(): string
+	public function isGuestAllowed(): bool
 	{
 		return Module_News::instance()->cfgGuestNews();
 	}
