@@ -242,7 +242,6 @@ final class GDO_News extends GDO implements RSSItem
 			$query->where('newstext_news=' . $this->getID());
 			$cache = $query->exec()->fetchAllArrayAssoc2dObject();
 			$this->tempSet('newstexts', $cache);
-			$this->recache();
 		}
 		return $cache;
 	}

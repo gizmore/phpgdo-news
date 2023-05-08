@@ -1,9 +1,13 @@
 <?php
+declare(strict_types=1);
 namespace GDO\News\Method;
 
 use GDO\Admin\MethodAdmin;
+use GDO\Core\GDO_ArgError;
+use GDO\Core\GDO_DBException;
 use GDO\Core\GDT;
 use GDO\Core\GDT_Object;
+use GDO\Core\GDT_Response;
 use GDO\Core\GDT_Tuple;
 use GDO\Date\Time;
 use GDO\Form\GDT_AntiCSRF;
@@ -27,10 +31,9 @@ use GDO\UI\GDT_Title;
 
 /**
  * Write and edit a news entry. Put in mailqueue and translate.
- *
  * This is a bit more complex form with tabs for each edited language.
  *
- * @version 7.0.1
+ * @version 7.0.3
  * @since 3.0.0
  * @author gizmore
  */
@@ -56,6 +59,9 @@ final class Write extends MethodForm
 		];
 	}
 
+	/**
+	 * @throws GDO_ArgError
+	 */
 	protected function createForm(GDT_Form $form): void
 	{
 		$news = $this->getNews();
@@ -155,13 +161,12 @@ final class Write extends MethodForm
 		$form->addField(GDT_AntiCSRF::make());
 	}
 
+	/**
+	 * @throws GDO_ArgError
+	 */
 	protected function getNews(): ?GDO_News
 	{
-		if (!isset($this->news))
-		{
-			$this->news = $this->gdoParameterValue('id');
-		}
-		return $this->news;
+		return $this->news ?: ($this->news = $this->gdoParameterValue('id'));
 	}
 
 	/**
@@ -173,6 +178,10 @@ final class Write extends MethodForm
 		return GDT_Message::make("newstext_message_{$iso}")->label('message')->notNull($primary);
 	}
 
+	/**
+	 * @throws GDO_DBException
+	 * @throws GDO_ArgError
+	 */
 	public function formValidated(GDT_Form $form): GDT
 	{
 		$news = $this->updateNews($form);
@@ -186,10 +195,14 @@ final class Write extends MethodForm
 		return $this->redirectMessage('msg_news_created', null, $hrefEdit);
 	}
 
-	private function updateNews(GDT_Form $form)
+	/**
+	 * @throws GDO_DBException
+	 * @throws GDO_ArgError
+	 */
+	private function updateNews(GDT_Form $form): GDO_News
 	{
 		# Update news
-		$news = $this->news ? $this->news : GDO_News::blank();
+		$news = $this->news ?: GDO_News::blank();
 		$catData = $form->getField('news_category')->getGDOData();
 		$news->setVars($catData);
 		$news->save();
@@ -214,14 +227,16 @@ final class Write extends MethodForm
 		if ($this->news)
 		{
 			$this->news->tempUnset('newstexts');
-			$this->news->recache();
 			$this->resetForm();
 		}
 
 		return $news;
 	}
 
-	public function onSubmit_visible(GDT_Form $form)
+	/**
+	 * @throws GDO_DBException
+	 */
+	public function onSubmit_visible(GDT_Form $form): GDT
 	{
 		$this->news->saveVars([
 			'news_visible' => '1',
@@ -231,7 +246,10 @@ final class Write extends MethodForm
 		return $this->message('msg_news_visible')->addField($this->renderPage());
 	}
 
-	public function onSubmit_invisible(GDT_Form $form)
+	/**
+	 * @throws GDO_DBException
+	 */
+	public function onSubmit_invisible(GDT_Form $form): GDT
 	{
 		$this->news->saveVar('news_visible', '0');
 		$this->resetForm();
@@ -241,7 +259,11 @@ final class Write extends MethodForm
 	############
 	### Mail ###
 	############
-	public function onSubmit_preview(GDT_Form $form)
+	/**
+	 * @throws GDO_DBException
+	 * @throws GDO_ArgError
+	 */
+	public function onSubmit_preview(GDT_Form $form): GDT_Tuple
 	{
 		# Save
 		$this->updateNews($form);
@@ -263,7 +285,10 @@ final class Write extends MethodForm
 		return $response;
 	}
 
-	public function onSubmit_send(GDT_Form $form)
+	/**
+	 * @throws GDO_DBException
+	 */
+	public function onSubmit_send(GDT_Form $form): GDT
 	{
 		$this->news->saveVar('news_send', Time::getDate());
 		return $this->message('msg_news_queue')->addField($this->renderPage());
@@ -272,22 +297,30 @@ final class Write extends MethodForm
 	#################
 	### Translate ###
 	#################
-	public function onTranslateAll(GDT_Form $form)
+	/**
+	 * @throws GDO_ArgError
+	 */
+	public function onTranslateAll(GDT_Form $form): GDT
 	{
 		$langs = Module_Language::instance()->cfgSupported();
 		foreach (array_keys($langs) as $iso)
 		{
 			$this->onTranslateLanguage($iso);
 		}
+		return GDT_Response::make();
 	}
 
-	public function onTranslateLanguage(string $iso)
+	/**
+	 * @throws GDO_ArgError
+	 */
+	public function onTranslateLanguage(string $iso): GDT
 	{
 		$src = $this->gdoParameter('source_iso');
 		if ($src !== $iso)
 		{
-			$this->message('msg_news_translated', [$src, $iso]);
+			return $this->message('msg_news_translated', [$src, $iso]);
 		}
+		return GDT_Response::make();
 	}
 
 }
