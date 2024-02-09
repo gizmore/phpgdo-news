@@ -106,10 +106,15 @@ final class GDO_News extends GDO implements RSSItem
 
 	public function getCategory(): ?GDO_Category { return $this->gdoValue('news_category'); }
 
-	public function getCategoryID() { return $this->gdoVar('news_category'); }	public function gdoColumns(): array
+	public function getCategoryID(): ?string
+    {
+        return $this->gdoVar('news_category');
+    }
+
+
+    public function gdoColumns(): array
 	{
 		$iso = GDO_Language::current()->getISO();
-
 		return [
 			GDT_AutoInc::make('news_id'),
 			GDT_Category::make('news_category')->emptyInitial(t('no_category')),
@@ -118,7 +123,6 @@ final class GDO_News extends GDO implements RSSItem
 			GDT_DateTime::make('news_sent')->label('news_sent'), # is out of queue? (sent)
 			GDT_CreatedAt::make('news_created'),
 			GDT_CreatedBy::make('news_creator'),
-
 			# join
 			GDT_Join::make('newstext')->join(GDO_NewsText::table(), 'nt', "nt.newstext_news = gdo_news.news_id AND nt.newstext_lang = '{$iso}'"),
 		];
@@ -126,11 +130,11 @@ final class GDO_News extends GDO implements RSSItem
 
 	public function getCreator(): GDO_User { return $this->gdoValue('news_creator'); }
 
-	public function getCreatorID() { return $this->gdoVar('news_creator'); }
+	public function getCreatorID(): string { return $this->gdoVar('news_creator'); }
 
-	public function canEdit(GDO_User $user) { return $user->isStaff(); }
+	public function canEdit(GDO_User $user): bool { return $user->isStaff(); }
 
-	public function href_edit() { return href('News', 'Write', '&id=' . $this->getID()); }
+	public function href_edit(): string { return href('News', 'Write', '&id=' . $this->getID()); }
 
 	public function href_view() { return href('News', 'View', '&id=' . $this->getID()); }
 
