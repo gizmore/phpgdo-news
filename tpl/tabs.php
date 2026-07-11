@@ -8,7 +8,7 @@ $user = GDO_User::current();
 $bar = GDT_Bar::make()->horizontal();
 $bar->addFields(
 	GDT_Link::make('link_newsletter')->href(href('News', 'NewsletterAbbo'))->icon('alert'),
-	GDT_Link::make('link_newsfeed')->href(href('News', 'RSSFeed'))->icon('alert'),
+	GDT_Link::make('link_newsfeed')->href(href('News', 'RSSFeed', '&_fmt=txt'))->icon('alert'),
 );
 if ($user->hasPermission('staff'))
 {
