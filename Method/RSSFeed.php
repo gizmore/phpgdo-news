@@ -31,7 +31,7 @@ final class RSSFeed extends Method
 			url('News', 'RSSFeed'));
 
 		$rss = $feed->render();
-		return GDT_HTML::make($rss);
+		return GDT_HTML::make()->var($rss);
 	}
 
 }
