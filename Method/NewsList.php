@@ -41,9 +41,9 @@ class NewsList extends MethodQueryCards
 
 	public function getDefaultOrder(): ?string { return 'news_created DESC'; }
 
-	public function getQuery(): Query
+	public function gdoQuery(): Query
 	{
-		return parent::getQuery()->where('news_visible')->joinObject('newstext');
+		return parent::gdoQuery()->where('news_visible')->joinObject('newstext');
 	}
 
 	public function onRenderTabs(): void

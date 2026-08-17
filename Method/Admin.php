@@ -53,9 +53,9 @@ final class Admin extends MethodQueryTable
 		];
 	}
 
-	public function getQuery(): Query
+	public function gdoQuery(): Query
 	{
-		$query = parent::getQuery()->select('nt.*');
+		$query = parent::gdoQuery()->select('nt.*');
 		$query->joinObject('newstext');
 		return $query;
 	}
