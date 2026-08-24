@@ -117,7 +117,7 @@ final class GDO_News extends GDO implements RSSItem
 		$iso = GDO_Language::current()->getISO();
 		return [
 			GDT_AutoInc::make('news_id'),
-			GDT_Category::make('news_category')->emptyInitial(t('no_category')),
+			GDT_Category::make('news_category')->emptyInitial('no_category'),
 			GDT_Checkbox::make('news_visible')->notNull()->initial('0'),
 			GDT_DateTime::make('news_send')->label('news_sending')->format(Time::FMT_MINUTE), # is in queue? (sending)
 			GDT_DateTime::make('news_sent')->label('news_sent'), # is out of queue? (sent)
