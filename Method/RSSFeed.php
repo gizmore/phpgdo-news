@@ -16,7 +16,12 @@ use GDO\UI\GDT_HTML;
 final class RSSFeed extends Method
 {
 
-	public function execute(): GDT
+    public function getDefaultRenderMode(): string
+    {
+        return 'xml';
+    }
+
+    public function execute(): GDT
 	{
 		$query = GDO_News::table()->select()->limit(10);
 		$query->where('news_visible')->order('news_created DESC');
